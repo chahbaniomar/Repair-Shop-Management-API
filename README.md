@@ -1,46 +1,147 @@
-# 🛠️ Système de Gestion de Réparations Électroniques
-**DS2 - Mini-Projet - Dev. Backend (1ère M-ISIDS)**
 
-**Réalisé par :** [Chahbani Omar]
+# Repair Shop Management API
 
----
+A RESTful backend application designed to manage the daily operations of a repair shop. The system provides authentication, role-based access control, device management, spare-parts inventory, repair tracking, and technician intervention management.
 
-## 🚀 Présentation
-Cette API REST permet de gérer un atelier de réparation. Elle gère les stocks de pièces, les appareils (devices) et les interventions techniques avec un système de rôles (Admin/Technicien).
+## Features
 
-## 🔐 Sécurité
-- **Authentification :** JWT (JSON Web Token).
-- **Mots de passe :** Sécurisés avec Bcrypt.
-- **Autorisation :** `RolesGuard` pour restreindre l'accès aux Managers (ADMIN) et Techniciens (TECH).
+- **Authentication and Authorization**
+  - User authentication using JWT.
+  - Password hashing with bcrypt.
+  - Role-based access control.
+  - Two user roles: ADMIN and TECH.
 
-## 🛠️ Installation
-1. Configurer la base de données MySQL : `repair_db`.
-2. `npm install`
-3. `npm run start:dev`
+- **Device Management**
+  - Manage customer devices registered for repair.
+  - Store and retrieve device information.
 
-## 📡 Endpoints testés et fonctionnels
+- **Spare Parts Management**
+  - Manage spare-parts inventory.
+  - Track available stock quantities.
+  - Update inventory when parts are used.
 
-### 1. Authentification
-- `POST /auth/register` : Inscription.
-- `POST /auth/login` : Connexion (Retourne le token).
+- **Repair Management**
+  - Create and manage repair records.
+  - Track repair progress and related information.
+  - Associate repairs with devices and technicians.
 
-### 2. Gestion du Stock (Module 2)
-- `POST /parts` : Ajouter une pièce (**Admin uniquement**).
-- `GET /parts` : Voir le stock.
+- **Technician Interventions**
+  - Record technician interventions.
+  - Associate interventions with repairs.
+  - Manage spare-parts consumption during interventions.
+  - Update inventory through transactional operations.
 
-### 3. Gestion des Appareils (Module 3)
-- `POST /devices` : Enregistrer un téléphone (Status: PENDING).
-- `GET /devices` : Liste des appareils.
+## Technologies Used
 
-### 4. Interventions (Module 4)
-- `POST /interventions` : Créer une fiche de réparation (**Technicien uniquement**).
-  - **Automatique :** L'intervention décrémente le stock et passe le statut de l'appareil à `REPAIRING`.
+| Technology | Purpose |
+|---|---|
+| Node.js | Runtime environment |
+| NestJS 11 | Backend framework |
+| TypeScript | Programming language |
+| MySQL | Relational database |
+| TypeORM | Database ORM |
+| JWT | Authentication |
+| Passport | Authentication strategy |
+| bcrypt | Password hashing |
+| Jest | Testing framework |
 
----
+## Project Structure
 
-## 🧪 Scénario de test (Cahier des charges)
-1. **Connexion Admin** -> Création d'une pièce "Écran" (Stock: 10).
-2. **Connexion Tech** -> Tentative de création de pièce (Erreur 403 - OK).
-3. **Action Tech** -> Enregistrement d'un iPhone.
-4. **Action Tech** -> Création de l'intervention.
-   - *Résultat :* Stock = 9, Statut iPhone = REPAIRING.
+```text
+repair-backend-api/
+├── src/
+│   ├── auth/
+│   ├── users/
+│   ├── devices/
+│   ├── repairs/
+│   ├── spare-parts/
+│   ├── interventions/
+│   └── ...
+├── test/
+├── package.json
+├── tsconfig.json
+└── nest-cli.json
+```
+
+*The structure above summarizes the main application modules.*
+
+## Installation and Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/chahbaniomar/repair-backend-api.git
+cd repair-backend-api
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env` file in the project root and configure the database connection and authentication settings.
+
+Example:
+
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=your_password
+DB_DATABASE=repair_shop
+
+JWT_SECRET=your_jwt_secret
+```
+
+Make sure the variable names match those expected by the application configuration.
+
+### 4. Start the application
+
+Development mode:
+
+```bash
+npm run start:dev
+```
+
+Production mode:
+
+```bash
+npm run build
+npm run start:prod
+```
+
+## Testing
+
+Run the automated tests using:
+
+```bash
+npm run test
+```
+
+## Main Modules
+
+| Module | Responsibility |
+|---|---|
+| Authentication | Login, JWT authentication, and access control |
+| Users | User management and roles |
+| Devices | Device records and information |
+| Repairs | Repair tracking and management |
+| Spare Parts | Inventory and stock management |
+| Interventions | Technician work and spare-parts consumption |
+
+## Future Improvements
+
+- Add API documentation using Swagger.
+- Implement more advanced repair status tracking.
+- Add customer notifications.
+- Improve reporting and inventory analytics.
+- Expand automated test coverage.
+
+## Author
+
+**Chahbani Omar**
+
+GitHub: [@chahbaniomar](https://github.com/chahbaniomar)
